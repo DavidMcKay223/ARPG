@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using BlockHero.MonoGame.Actors.Player;
 
 namespace BlockHero.MonoGame
 {
@@ -8,6 +9,7 @@ namespace BlockHero.MonoGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Player _player;
 
         public Game1()
         {
@@ -18,7 +20,11 @@ namespace BlockHero.MonoGame
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _player = new Player();
+
+            _graphics.PreferredBackBufferWidth = 1200;
+            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -27,7 +33,7 @@ namespace BlockHero.MonoGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _player.LoadContent(GraphicsDevice, Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +41,7 @@ namespace BlockHero.MonoGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -44,7 +50,9 @@ namespace BlockHero.MonoGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _player.Draw(_spriteBatch);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }

@@ -15,6 +15,18 @@
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Aesthetics\Animations\" />
+    <Folder Include="Content\Aesthetics\Particles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\Aesthetics\Sprites\player_sprite.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\bin\Windows\Aesthetics\Sprites\player_sprite.xnb">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
