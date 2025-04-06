@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlockHero", "BlockHero", "{738DE055-06B7-4D64-99A7-4FBF69B46379}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{941DF80F-E8D7-4B8F-A384-28C0894F118C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{250DA240-6787-442A-A287-2449F2BBCB11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{638D2D3B-5662-4BC1-9F87-284C7F4E60BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockHero.MonoGame", "BlockHero\src\BlockHero.MonoGame\BlockHero.MonoGame.csproj", "{6E38D178-1461-4EB7-9DF1-0F673C15C5C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E38D178-1461-4EB7-9DF1-0F673C15C5C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E38D178-1461-4EB7-9DF1-0F673C15C5C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E38D178-1461-4EB7-9DF1-0F673C15C5C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E38D178-1461-4EB7-9DF1-0F673C15C5C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{941DF80F-E8D7-4B8F-A384-28C0894F118C} = {738DE055-06B7-4D64-99A7-4FBF69B46379}
+		{638D2D3B-5662-4BC1-9F87-284C7F4E60BA} = {250DA240-6787-442A-A287-2449F2BBCB11}
+		{6E38D178-1461-4EB7-9DF1-0F673C15C5C8} = {941DF80F-E8D7-4B8F-A384-28C0894F118C}
+	EndGlobalSection
+EndGlobal
