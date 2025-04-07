@@ -31,7 +31,8 @@ namespace BlockHero.MonoGame.Actors
 
         // Bounding box for collision
         public Rectangle BoundingBox => Texture == null ? Rectangle.Empty : new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-
+        
+        public Vector2 CenterPosition => Texture == null ? Position : Position + new Vector2(Texture.Width / 2f, Texture.Height / 2f);
 
         public Enemy(Vector2 position)
         {

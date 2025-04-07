@@ -21,11 +21,24 @@ namespace BlockHero.MonoGame
         private float _enemySpawnCooldown = 3.0f; // Spawn enemy every 3 seconds
         private Random _random = new Random();
 
+        // Static instance of Game1 for easy access
+        public static Game1 Instance { get; private set; }
+
+        // Public property to access the list of enemies
+        public List<Enemy> Enemies => _enemies;
+
+        // Public property to access the Random instance
+        public Random GameRandom => _random;
+
+        // Public property to access the Player instance
+        public Player Player => _player;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Instance = this;
         }
 
         protected override void Initialize()
