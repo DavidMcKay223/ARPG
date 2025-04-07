@@ -39,10 +39,16 @@ namespace BlockHero.MonoGame.Actors.Player.Bio
 
         public bool SpendMana(int amount)
         {
-            if (CurrentMana < amount)
+            // If consuming mana (positive amount), make sure there's enough
+            if (amount > 0 && CurrentMana < amount)
                 return false;
 
             CurrentMana -= amount;
+
+            // Clamp to max
+            if (CurrentMana > MaxMana)
+                CurrentMana = MaxMana;
+
             return true;
         }
 

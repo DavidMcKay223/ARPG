@@ -60,7 +60,7 @@ namespace BlockHero.MonoGame
             base.Initialize();
         }
 
-        private void SpawnEnemy(Vector2? position = null)
+        public void SpawnEnemy(Vector2? position = null)
         {
             Vector2 spawnPosition = position ?? new Vector2(
                 _random.Next(50, 1150), // Adjust X range

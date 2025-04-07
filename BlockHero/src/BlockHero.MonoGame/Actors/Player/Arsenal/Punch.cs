@@ -12,7 +12,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
     public class Punch : AbstractWeapon
     {
-        public override int ManaCost => 3;
+        public override int ManaCost => -5;
         public override float CooldownTime => 0.4f;
         public override int Damage => 25;
 
