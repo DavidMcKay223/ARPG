@@ -25,7 +25,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
 
         public override void LoadContent(ContentManager content)
         {
-            _novaTexture = content.Load<Texture2D>("Aesthetics/Sprites/projectile_sprite");
+            _novaTexture = content.Load<Texture2D>("Aesthetics/Sprites/lightning_ball_sprite");
         }
 
         protected override void Attack(Vector2 ownerPosition)

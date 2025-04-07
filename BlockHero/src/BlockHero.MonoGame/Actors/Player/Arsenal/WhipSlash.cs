@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
-    internal class WhipSlash
+    public class WhipSlash
     {
     }
 }
