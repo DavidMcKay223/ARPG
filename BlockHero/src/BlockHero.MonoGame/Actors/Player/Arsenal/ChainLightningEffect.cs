@@ -18,7 +18,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
         private bool _hasBounced = false;
 
         public ChainLightningEffect(Vector2 start, Enemy firstTarget, ChainLightning weapon, Texture2D texture)
-            : base(texture, weapon.LightningDuration)
+            : base(weapon, texture, weapon.LightningDuration)
         {
             _startPosition = start;
             _weapon = weapon;

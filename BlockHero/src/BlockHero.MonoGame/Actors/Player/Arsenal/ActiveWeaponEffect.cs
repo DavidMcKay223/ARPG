@@ -18,8 +18,11 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
         protected float Timer;
         protected Vector2 Position;
 
-        protected ActiveWeaponEffect(Texture2D texture, float duration)
+        protected readonly AbstractWeapon Weapon;
+
+        protected ActiveWeaponEffect(AbstractWeapon weapon, Texture2D texture, float duration)
         {
+            Weapon = weapon;
             Texture = texture;
             Duration = duration;
             Timer = duration;

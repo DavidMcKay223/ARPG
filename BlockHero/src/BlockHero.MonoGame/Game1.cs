@@ -79,7 +79,7 @@ namespace BlockHero.MonoGame
             _player.LoadContent(GraphicsDevice, Content);
 
             _statsUI = new StatsUI(_player);
-            _statsUI.LoadContent(Content);
+            _statsUI.LoadContent(Content, GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)

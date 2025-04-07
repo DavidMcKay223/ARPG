@@ -7,12 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using BlockHero.MonoGame.Actors.Player.Bio;
 
 namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
     public class BasicGun : AbstractWeapon
     {
         public override float CooldownTime => 0.5f;
+        public override int Damage => 10;
+
+        public BasicGun(Stats stats) : base(stats)
+        {
+        }
 
         public override void LoadContent(ContentManager content)
         {
@@ -34,7 +40,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
                 projectileStart,
                 direction,
                 speed: 400f,
-                damage: 10,
+                damage: Damage,
                 lifespan: 2.0f
             );
 

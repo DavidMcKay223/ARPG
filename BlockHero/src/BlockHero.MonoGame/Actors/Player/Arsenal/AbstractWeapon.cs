@@ -6,17 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using BlockHero.MonoGame.Actors.Player.Bio;
 
 namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
     public abstract class AbstractWeapon : IWeapon
     {
+        public virtual int ManaCost => 0;
+        protected Stats _stats;
+
         protected float _cooldownTimer = 0f;
         protected List<Projectile> _newProjectiles = new();
         protected Texture2D _projectileTexture;
 
         public abstract float CooldownTime { get; }
         public virtual bool CanAttack => _cooldownTimer <= 0f;
+
+        public abstract int Damage { get; }
+
+        public AbstractWeapon(Stats stats)
+        {
+            _stats = stats;
+        }
 
         public virtual void LoadContent(ContentManager content) 
         {

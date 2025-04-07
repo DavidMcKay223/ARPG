@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using BlockHero.MonoGame.Workroom;
+using BlockHero.MonoGame.Actors.Player.Bio;
 
 namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
@@ -14,23 +15,32 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
     {
         private WeaponEffectManager _effectManager = new();
 
+        public override int ManaCost => 20;
         public override float CooldownTime => 1.5f;
         public int BaseDamage => 55;
+        public override int Damage => 55;
         public float Range => 450f;
         public float BounceRange => 200f;
         public int MaxBounces => 6;
         public float LightningDuration => 0.25f;
+
+        public ChainLightning(Stats stats) : base(stats)
+        {
+        }
 
         protected override void Attack(Vector2 ownerPosition)
         {
             if (Game1.Instance?.Enemies == null || !Game1.Instance.Enemies.Any())
                 return;
 
-            var firstTarget = EnemyQuery.FindClosestEnemy(ownerPosition, Range, null, Game1.Instance.Enemies);
-            if (firstTarget != null && firstTarget.IsActive)
+            if (_stats.SpendMana(ManaCost))
             {
-                var effect = new ChainLightningEffect(ownerPosition, firstTarget, this, _projectileTexture);
-                _effectManager.AddEffect(effect);
+                var firstTarget = EnemyQuery.FindClosestEnemy(ownerPosition, Range, null, Game1.Instance.Enemies);
+                if (firstTarget != null && firstTarget.IsActive)
+                {
+                    var effect = new ChainLightningEffect(ownerPosition, firstTarget, this, _projectileTexture);
+                    _effectManager.AddEffect(effect);
+                }
             }
         }
 

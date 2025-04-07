@@ -45,8 +45,8 @@ namespace BlockHero.MonoGame.Actors.Player
         {
             _position = new Vector2(100, 100);
             _speed = 200f; // Pixels per second
-            _currentWeapon = new Hammer();
             _stats = new Stats();
+            _currentWeapon = new Nova(_stats);
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, Microsoft.Xna.Framework.Content.ContentManager content)

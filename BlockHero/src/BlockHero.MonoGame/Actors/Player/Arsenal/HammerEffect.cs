@@ -11,16 +11,14 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
     public class HammerEffect : ActiveWeaponEffect
     {
-        private readonly Hammer _weapon;
         private float _angle;
         private float _rotationSpeed = 6f; // radians per second
         private float _radius = 80f;
         private Vector2 _ownerPosition;
 
         public HammerEffect(Vector2 ownerPosition, Hammer weapon, Texture2D texture)
-            : base(texture, duration: 3f) // hammer spins for 3 seconds
+            : base(weapon, texture, duration: 3f) // hammer spins for 3 seconds
         {
-            _weapon = weapon;
             _ownerPosition = ownerPosition;
         }
 
@@ -53,7 +51,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
 
                 if (Vector2.Distance(enemy.CenterPosition, Position) < 40f)
                 {
-                    enemy.TakeDamage(15);
+                    enemy.TakeDamage(Weapon.Damage);
                     Targets.Add(enemy); // prevent repeated hits
                 }
             }
