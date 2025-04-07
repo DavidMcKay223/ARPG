@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Aesthetics/Fonts/StatsFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Aesthetics/Fonts/StatsFont.spritefont
+
 #begin Aesthetics/Sprites/enemy_sprite.png
 /importer:TextureImporter
 /processor:TextureProcessor

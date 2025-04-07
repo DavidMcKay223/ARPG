@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlockHero.MonoGame.Actors.Player.Arsenal;
+using BlockHero.MonoGame.Actors.Player.Bio;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,6 +16,7 @@ namespace BlockHero.MonoGame.Actors.Player
         private Texture2D _texture;
         private Vector2 _position;
         private float _speed;
+        private Stats _stats;
 
         private IWeapon _currentWeapon;
         private List<Projectile> _activeProjectiles = new List<Projectile>();
@@ -37,11 +39,14 @@ namespace BlockHero.MonoGame.Actors.Player
             set { _speed = value; }
         }
 
+        public Stats Stats => _stats;
+
         public Player()
         {
             _position = new Vector2(100, 100);
             _speed = 200f; // Pixels per second
-            _currentWeapon = new BasicGun();
+            _currentWeapon = new Hammer();
+            _stats = new Stats();
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, Microsoft.Xna.Framework.Content.ContentManager content)

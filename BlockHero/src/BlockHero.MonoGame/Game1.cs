@@ -6,6 +6,7 @@ using BlockHero.MonoGame.Actors;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using BlockHero.MonoGame.Interfaces.Overlays;
 
 namespace BlockHero.MonoGame
 {
@@ -15,6 +16,8 @@ namespace BlockHero.MonoGame
         private SpriteBatch _spriteBatch;
         private Player _player;
         private List<Enemy> _enemies = new List<Enemy>();
+
+        private StatsUI _statsUI;
 
         // Timer for spawning enemies (optional)
         private float _enemySpawnTimer = 0f;
@@ -74,6 +77,9 @@ namespace BlockHero.MonoGame
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _player.LoadContent(GraphicsDevice, Content);
+
+            _statsUI = new StatsUI(_player);
+            _statsUI.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -160,6 +166,8 @@ namespace BlockHero.MonoGame
 
             // Draw Player (and their projectiles)
             _player.Draw(_spriteBatch);
+
+            _statsUI.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

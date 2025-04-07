@@ -16,6 +16,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
         protected readonly Texture2D Texture;
         protected readonly float Duration;
         protected float Timer;
+        protected Vector2 Position;
 
         protected ActiveWeaponEffect(Texture2D texture, float duration)
         {
@@ -33,6 +34,11 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
             {
                 IsFinished = true;
             }
+        }
+
+        public virtual void Update(GameTime gameTime, Vector2? ownerPosition)
+        {
+            Update(gameTime);
         }
 
         protected virtual void ApplyDamage(Enemy enemy, float baseDamage, int bounceIndex = 0)

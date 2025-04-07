@@ -27,6 +27,16 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
             }
         }
 
+        public void Update(GameTime gameTime, Vector2 ownerPosition)
+        {
+            for (int i = _effects.Count - 1; i >= 0; i--)
+            {
+                _effects[i].Update(gameTime, ownerPosition);
+                if (_effects[i].IsFinished)
+                    _effects.RemoveAt(i);
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var effect in _effects)
