@@ -17,5 +17,23 @@ namespace BlockHero.MonoGame.Workroom
                 .OrderBy(e => Vector2.Distance(origin, e.Position))
                 .FirstOrDefault();
         }
+
+        public static Enemy FindClosestEnemy(Vector2 origin, float range, List<Enemy> ignoredTargets, List<Enemy> allEnemies)
+        {
+            Enemy closest = null;
+            float minDistSq = float.MaxValue;
+            foreach (var e in allEnemies)
+            {
+                if (!e.IsActive || (ignoredTargets != null && ignoredTargets.Contains(e)))
+                    continue;
+                float distSq = Vector2.DistanceSquared(origin, e.CenterPosition);
+                if (distSq < minDistSq && distSq <= range * range)
+                {
+                    minDistSq = distSq;
+                    closest = e;
+                }
+            }
+            return closest;
+        }
     }
 }

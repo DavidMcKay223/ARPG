@@ -16,8 +16,8 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
 
         void LoadContent(ContentManager content);
         void Update(GameTime gameTime, Vector2 ownerPosition, bool isAttacking);
-        void Draw(SpriteBatch spriteBatch); // For drawing the weapon itself, if needed
-        // Returns a list of new projectiles created this frame
+        void Draw(SpriteBatch spriteBatch);
+
         List<Projectile> GetNewProjectiles();
     }
 }

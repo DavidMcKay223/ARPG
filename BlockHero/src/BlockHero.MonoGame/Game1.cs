@@ -49,16 +49,22 @@ namespace BlockHero.MonoGame
 
             _player = new Player();
 
-            SpawnEnemy(new Vector2(500, 300));
-            SpawnEnemy(new Vector2(700, 500));
-            SpawnEnemy(new Vector2(200, 600));
-
+            for(int i = 0; i < 15; i++)
+            {
+                SpawnEnemy();
+            }
+            
             base.Initialize();
         }
 
-        private void SpawnEnemy(Vector2 position)
+        private void SpawnEnemy(Vector2? position = null)
         {
-            Enemy newEnemy = new Enemy(position);
+            Vector2 spawnPosition = position ?? new Vector2(
+                _random.Next(50, 1150), // Adjust X range
+                _random.Next(50, 850)   // Adjust Y range
+            );
+
+            Enemy newEnemy = new Enemy(spawnPosition);
             newEnemy.LoadContent(Content);
             _enemies.Add(newEnemy);
         }
