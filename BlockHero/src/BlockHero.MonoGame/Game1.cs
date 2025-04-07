@@ -127,7 +127,7 @@ namespace BlockHero.MonoGame
                     if (!enemy.IsActive) continue; // Skip inactive enemies
 
                     // Simple Rectangle intersection check
-                    if (projectile.BoundingBox.Intersects(enemy.BoundingBox))
+                    if (projectile.GetBoundingBox().Intersects(enemy.BoundingBox))
                     {
                         enemy.TakeDamage(projectile.Damage); // Enemy takes damage
                         projectile.IsActive = false;        // Deactivate projectile on hit

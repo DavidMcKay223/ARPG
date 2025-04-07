@@ -155,7 +155,7 @@ namespace BlockHero.MonoGame.Actors
                     Color.White,
                     0f,
                     Vector2.Zero, // Origin top-left
-                    0.05f,
+                    1.0f,
                     SpriteEffects.None,
                     0f
                 );

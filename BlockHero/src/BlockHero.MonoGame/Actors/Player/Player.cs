@@ -41,7 +41,7 @@ namespace BlockHero.MonoGame.Actors.Player
         {
             _position = new Vector2(100, 100);
             _speed = 200f; // Pixels per second
-            _currentWeapon = new ChainLightning();
+            _currentWeapon = new BasicGun();
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, Microsoft.Xna.Framework.Content.ContentManager content)
@@ -118,7 +118,7 @@ namespace BlockHero.MonoGame.Actors.Player
                     Color.White,
                     0f,
                     Vector2.Zero, // Origin top-left
-                    0.125f,
+                    1.0f,
                     SpriteEffects.None,
                     0f
                 );

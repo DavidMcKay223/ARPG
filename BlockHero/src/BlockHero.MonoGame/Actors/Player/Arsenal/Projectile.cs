@@ -10,34 +10,21 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
 {
     public class Projectile
     {
-        public Texture2D Texture { get; set; }
-        public Vector2 Position { get; set; }
-        public Vector2 Velocity { get; set; }
-        public float Speed { get; set; }
-        public int Damage { get; set; }
+        private const float Scale = 1.0f;
+
+        public Texture2D Texture { get; }
+        public Vector2 Position { get; private set; }
+        public Vector2 Velocity { get; }
+        public float Speed { get; }
+        public int Damage { get; }
+        public float Lifespan { get; }
+
         public bool IsActive { get; set; }
-        public float Lifespan { get; set; } // How long the projectile lasts in seconds
+
         private float _timer;
-
-        // Bounding box for collision
-        public Rectangle BoundingBox
-        {
-            get
-            {
-                if (Texture == null) return Rectangle.Empty;
-
-                float scale = 0.05f;
-                int scaledWidth = (int)(Texture.Width * scale);
-                int scaledHeight = (int)(Texture.Height * scale);
-
-                // Adjust position based on the origin used in Draw (center)
-                int topLeftX = (int)(Position.X - scaledWidth / 2f);
-                int topLeftY = (int)(Position.Y - scaledHeight / 2f);
-
-
-                return new Rectangle(topLeftX, topLeftY, scaledWidth, scaledHeight);
-            }
-        }
+        private readonly Vector2 _origin;
+        private readonly int _scaledWidth;
+        private readonly int _scaledHeight;
 
         public Projectile(Texture2D texture, Vector2 position, Vector2 direction, float speed, int damage, float lifespan)
         {
@@ -49,6 +36,17 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
             Lifespan = lifespan;
             IsActive = true;
             _timer = 0f;
+
+            _origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            _scaledWidth = (int)(texture.Width * Scale);
+            _scaledHeight = (int)(texture.Height * Scale);
+        }
+
+        public Rectangle GetBoundingBox()
+        {
+            int x = (int)(Position.X - _scaledWidth / 2f);
+            int y = (int)(Position.Y - _scaledHeight / 2f);
+            return new Rectangle(x, y, _scaledWidth, _scaledHeight);
         }
 
         public void Update(GameTime gameTime)
@@ -61,35 +59,29 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
             _timer += deltaTime;
             if (_timer >= Lifespan)
             {
-                IsActive = false; // Deactivate projectile after lifespan expires
+                IsActive = false;
             }
 
-            // Optional: Deactivate if it goes off-screen (adjust bounds as needed)
-            // if (Position.X < 0 || Position.X > 1200 || Position.Y < 0 || Position.Y > 900)
-            // {
-            //     IsActive = false;
-            // }
+            // Optional off-screen check:
+            if (Position.X < 0 || Position.X > 1200 || Position.Y < 0 || Position.Y > 900)
+                IsActive = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (IsActive && Texture != null)
-            {
-                Vector2 origin = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
-                float scale = 0.05f;
+            if (!IsActive) return;
 
-                spriteBatch.Draw(
-                    Texture,
-                    Position,
-                    null,
-                    Color.White,
-                    0f,
-                    origin, // Using center origin
-                    scale,  // Using scale
-                    SpriteEffects.None,
-                    0f
-                );
-            }
+            spriteBatch.Draw(
+                Texture,
+                Position,
+                null,
+                Color.White,
+                0f,
+                _origin,
+                Scale,
+                SpriteEffects.None,
+                0f
+            );
         }
     }
 }
