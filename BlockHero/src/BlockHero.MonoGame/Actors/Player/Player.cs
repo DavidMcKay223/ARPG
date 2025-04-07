@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlockHero.MonoGame.Actors.Player.Arsenal;
 using BlockHero.MonoGame.Actors.Player.Bio;
+using BlockHero.MonoGame.Actors.Player.Evolutions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,9 +20,13 @@ namespace BlockHero.MonoGame.Actors.Player
         private Stats _stats;
 
         private IWeapon _currentWeapon;
+        private IWeapon _secondaryWeapon;
+
         private List<Projectile> _activeProjectiles = new List<Projectile>();
 
         public IReadOnlyList<Projectile> ActiveProjectiles => _activeProjectiles;
+
+        private List<Ability> _abilities = new();
 
         public Rectangle BoundingBox => _texture == null ? Rectangle.Empty : new Rectangle((int)Position.X, (int)Position.Y, (int)(_texture.Width * 0.125f), (int)(_texture.Height * 0.125f));
 
@@ -46,7 +51,25 @@ namespace BlockHero.MonoGame.Actors.Player
             _position = new Vector2(100, 100);
             _speed = 200f; // Pixels per second
             _stats = new Stats();
+
             _currentWeapon = new WhipSlash(_stats);
+            _secondaryWeapon = new Hammer(_stats);
+
+            _abilities.Add(new RighteousFire());
+            _abilities.Add(new ArcaneExplosion());
+            _abilities.Add(new StatBoost());
+            _abilities.Add(new KillAllSplit());
+        }
+
+        public void AddProjectile(Projectile projectile)
+        {
+            if (projectile != null)
+                _activeProjectiles.Add(projectile);
+        }
+
+        public void AddProjectiles(IEnumerable<Projectile> projectiles)
+        {
+            _activeProjectiles.AddRange(projectiles.Where(p => p != null));
         }
 
         public Vector2 GetFacingDirection()
@@ -62,13 +85,23 @@ namespace BlockHero.MonoGame.Actors.Player
         public void LoadContent(GraphicsDevice graphicsDevice, Microsoft.Xna.Framework.Content.ContentManager content)
         {
             _texture = content.Load<Texture2D>("Aesthetics/Sprites/player_sprite");
+
             _currentWeapon?.LoadContent(content);
+            _secondaryWeapon?.LoadContent(content);
         }
 
         public void Update(GameTime gameTime)
         {
             HandleInput(gameTime);
             UpdateProjectiles(gameTime);
+
+            foreach (var ability in _abilities)
+            {
+                ability.Update(gameTime);
+
+                if (Keyboard.GetState().IsKeyDown(ability.ActivationKey))
+                    ability.TryActivate(this);
+            }
         }
 
         private void HandleInput(GameTime gameTime)
@@ -92,10 +125,12 @@ namespace BlockHero.MonoGame.Actors.Player
             _position += movement * _speed * deltaTime;
 
             // --- Attacking ---
-            bool isAttacking = mouseState.LeftButton == ButtonState.Pressed; // Attack on left click
+            bool isPrimaryAttacking = mouseState.LeftButton == ButtonState.Pressed;
+            bool isSecondaryAttacking = mouseState.RightButton == ButtonState.Pressed;
 
             // Update the weapon (passing player position and attack state)
-            _currentWeapon?.Update(gameTime, CenterPosition, isAttacking);
+            _currentWeapon?.Update(gameTime, CenterPosition, isPrimaryAttacking);
+            _secondaryWeapon?.Update(gameTime, CenterPosition, isSecondaryAttacking);
 
             // Add any new projectiles created by the weapon this frame
             if (_currentWeapon != null)
@@ -103,9 +138,10 @@ namespace BlockHero.MonoGame.Actors.Player
                 _activeProjectiles.AddRange(_currentWeapon.GetNewProjectiles());
             }
 
-            // Optional: Boundary checks
-            // _position.X = MathHelper.Clamp(_position.X, 0, 1200 - BoundingBox.Width);
-            // _position.Y = MathHelper.Clamp(_position.Y, 0, 900 - BoundingBox.Height);
+            if (_secondaryWeapon != null)
+            {
+                _activeProjectiles.AddRange(_secondaryWeapon.GetNewProjectiles());
+            }
         }
 
         private void UpdateProjectiles(GameTime gameTime)
@@ -141,6 +177,7 @@ namespace BlockHero.MonoGame.Actors.Player
 
             // Draw Weapon (if it has visuals)
             _currentWeapon?.Draw(spriteBatch);
+            _secondaryWeapon?.Draw(spriteBatch);
 
             // Draw Projectiles
             foreach (var projectile in _activeProjectiles)

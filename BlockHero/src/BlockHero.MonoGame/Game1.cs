@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using BlockHero.MonoGame.Interfaces.Overlays;
+using BlockHero.MonoGame.Actors.Player.Arsenal;
 
 namespace BlockHero.MonoGame
 {
@@ -58,6 +59,11 @@ namespace BlockHero.MonoGame
             }
             
             base.Initialize();
+        }
+
+        public void SpawnProjectile(Projectile projectile)
+        {
+            _player.AddProjectile(projectile);
         }
 
         public void SpawnEnemy(Vector2? position = null)

@@ -13,7 +13,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
         private const float Scale = 1.0f;
 
         public Texture2D Texture { get; }
-        public Vector2 Position { get; private set; }
+        public Vector2 Position { get; protected set; }
         public Vector2 Velocity { get; }
         public float Speed { get; }
         public int Damage { get; }
@@ -49,7 +49,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
             return new Rectangle(x, y, _scaledWidth, _scaledHeight);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             if (!IsActive) return;
 
@@ -67,7 +67,7 @@ namespace BlockHero.MonoGame.Actors.Player.Arsenal
                 IsActive = false;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (!IsActive) return;
 

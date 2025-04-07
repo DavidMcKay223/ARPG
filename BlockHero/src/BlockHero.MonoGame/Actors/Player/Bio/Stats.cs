@@ -8,6 +8,8 @@ namespace BlockHero.MonoGame.Actors.Player.Bio
 {
     public class Stats
     {
+        public int Level { get; set; } = 1;
+
         // Core Attributes
         public int Strength { get; set; } = 10;
         public int Dexterity { get; set; } = 10;
