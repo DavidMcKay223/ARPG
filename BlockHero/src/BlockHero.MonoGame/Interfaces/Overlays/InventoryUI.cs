@@ -29,10 +29,23 @@ namespace BlockHero.MonoGame.Interfaces.Overlays
         private Texture2D _placeholderIcon;
         private SpriteFont _font;
 
+        private Dictionary<GearSlot, GearItem> _equipped = new();
+        private Dictionary<GearSlot, Rectangle> _gearSlotBounds = new();
+
         public InventoryUI()
         {
             _inventoryBounds = new Rectangle(50, 50, Columns * (SlotSize + Padding) + Padding, Rows * (SlotSize + Padding) + 30 + Padding);
             _items = Game1.Instance.Player.Inventory.Items;
+
+            int gearX = _inventoryBounds.Right + 30;
+            int gearY = _inventoryBounds.Top;
+            int slotY = gearY;
+
+            foreach (GearSlot slot in Enum.GetValues(typeof(GearSlot)))
+            {
+                _gearSlotBounds[slot] = new Rectangle(gearX, slotY, SlotSize, SlotSize);
+                slotY += SlotSize + Padding;
+            }
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice, ContentManager content)
@@ -89,6 +102,36 @@ namespace BlockHero.MonoGame.Interfaces.Overlays
                 _draggingItem = null;
                 _draggingIndex = -1;
             }
+
+            if (_draggingItem != null)
+            {
+                foreach (var kvp in _gearSlotBounds)
+                {
+                    if (kvp.Value.Contains(mousePos))
+                    {
+                        GearSlot slot = kvp.Key;
+
+                        if (_draggingItem.Slot == slot)
+                        {
+                            var player = Game1.Instance.Player;
+
+                            if (_equipped.TryGetValue(slot, out GearItem oldItem))
+                            {
+                                oldItem.Remove(player);
+                                _items.Add(oldItem); // return to inventory
+                            }
+
+                            _equipped[slot] = _draggingItem;
+                            _draggingItem.Apply(player);
+
+                            if (_draggingIndex < _items.Count)
+                                _items.RemoveAt(_draggingIndex);
+                        }
+
+                        break;
+                    }
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -116,7 +159,8 @@ namespace BlockHero.MonoGame.Interfaces.Overlays
                             slotRect.Center.X - textSize.X / 2,
                             slotRect.Bottom + 2
                         );
-                        spriteBatch.DrawString(_font, name, textPos, Color.White);
+                        spriteBatch.DrawString(_font, name, textPos, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+
                     }
                 }
             }
@@ -127,6 +171,21 @@ namespace BlockHero.MonoGame.Interfaces.Overlays
                 Point drawPos = new Point(mouse.X - _draggingOffset.X, mouse.Y - _draggingOffset.Y);
                 var drawRect = new Rectangle(drawPos, new Point(SlotSize, SlotSize));
                 spriteBatch.Draw(_placeholderIcon, drawRect, Color.White);
+            }
+
+            foreach (var kvp in _gearSlotBounds)
+            {
+                spriteBatch.Draw(Game1.Instance.WhitePixel, kvp.Value, Color.SaddleBrown * 0.8f);
+
+                if (_equipped.TryGetValue(kvp.Key, out var item) && item != _draggingItem)
+                {
+                    spriteBatch.Draw(Game1.Instance.WhitePixel, kvp.Value, Color.White); // Replace with item.Texture later
+                }
+
+                // Optional: draw slot name
+                string label = kvp.Key.ToString();
+                var textSize = _font.MeasureString(label);
+                spriteBatch.DrawString(_font, label, new Vector2(kvp.Value.X + (SlotSize - textSize.X) / 2, kvp.Value.Bottom), Color.White, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
             }
         }
 

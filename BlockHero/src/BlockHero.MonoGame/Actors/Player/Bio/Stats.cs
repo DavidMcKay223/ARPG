@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlockHero.MonoGame.GameItems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -82,5 +83,12 @@ namespace BlockHero.MonoGame.Actors.Player.Bio
             CurrentMana = Math.Min(CurrentMana, MaxMana);
         }
 
+        public void AddBonusesFrom(GearItem item)
+        {
+            Strength += item.BonusStrength;
+            Dexterity += item.BonusDexterity;
+            Vitality += item.BonusVitality;
+            Energy += item.BonusEnergy;
+        }
     }
 }
