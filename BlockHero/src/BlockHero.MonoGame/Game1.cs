@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using BlockHero.MonoGame.Interfaces.Overlays;
 using BlockHero.MonoGame.Actors.Player.Arsenal;
+using BlockHero.MonoGame.Systems;
 
 namespace BlockHero.MonoGame
 {
@@ -19,6 +20,7 @@ namespace BlockHero.MonoGame
         private List<Enemy> _enemies = new List<Enemy>();
 
         private StatsUI _statsUI;
+        private UIManager _uiManager;
 
         // Timer for spawning enemies (optional)
         private float _enemySpawnTimer = 0f;
@@ -27,6 +29,8 @@ namespace BlockHero.MonoGame
 
         // Static instance of Game1 for easy access
         public static Game1 Instance { get; private set; }
+
+        public Texture2D WhitePixel { get; private set; }
 
         // Public property to access the list of enemies
         public List<Enemy> Enemies => _enemies;
@@ -53,7 +57,9 @@ namespace BlockHero.MonoGame
 
             _player = new Player();
 
-            for(int i = 0; i < 15; i++)
+            _uiManager = new UIManager();
+
+            for (int i = 0; i < 15; i++)
             {
                 SpawnEnemy();
             }
@@ -86,6 +92,11 @@ namespace BlockHero.MonoGame
 
             _statsUI = new StatsUI(_player);
             _statsUI.LoadContent(Content, GraphicsDevice);
+
+            _uiManager.LoadContent(GraphicsDevice, Content);
+
+            WhitePixel = new Texture2D(GraphicsDevice, 1, 1);
+            WhitePixel.SetData(new[] { Color.White });
         }
 
         protected override void Update(GameTime gameTime)
@@ -97,6 +108,9 @@ namespace BlockHero.MonoGame
 
             // Update Player
             _player.Update(gameTime);
+
+            _uiManager.HandleInput();
+            _uiManager.Update(gameTime);
 
             // --- Enemy Spawning Logic (Optional) ---
             _enemySpawnTimer += deltaTime;
@@ -174,6 +188,8 @@ namespace BlockHero.MonoGame
             _player.Draw(_spriteBatch);
 
             _statsUI.Draw(_spriteBatch);
+
+            _uiManager.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockHero.MonoGame.Actors.Player.Gear
+namespace BlockHero.MonoGame.Interfaces.Panels
 {
-    internal class Inventory
+    internal class MenuPanel
     {
     }
 }

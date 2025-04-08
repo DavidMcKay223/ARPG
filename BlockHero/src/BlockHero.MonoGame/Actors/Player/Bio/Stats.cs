@@ -8,7 +8,13 @@ namespace BlockHero.MonoGame.Actors.Player.Bio
 {
     public class Stats
     {
+        // Player Stats
         public int Level { get; set; } = 1;
+        public int Experience { get; set; } = 0;
+        public int Gold { get; set; } = 0;
+
+        public int AttackCount { get; set; } = 1;
+        public float Range { get; set; } = 50;
 
         // Core Attributes
         public int Strength { get; set; } = 10;

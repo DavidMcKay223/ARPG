@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
+using BlockHero.MonoGame.Actors.Player;
+using BlockHero.MonoGame.GameItems;
 
 namespace BlockHero.MonoGame.Actors
 {
@@ -141,6 +143,12 @@ namespace BlockHero.MonoGame.Actors
             {
                 IsActive = false; // Enemy is dead
                                   // Add effects here: play sound, particle effect, drop loot etc.
+
+                if (Game1.Instance.GameRandom.NextDouble() < 0.2) // 20% drop chance
+                {
+                    var drop = GearFactory.CreateRandomGear();
+                    Game1.Instance.Player.Inventory.Items.Add(drop);
+                }
             }
         }
 

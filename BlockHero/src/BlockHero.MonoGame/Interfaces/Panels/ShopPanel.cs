@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlockHero.MonoGame.Pilots
+namespace BlockHero.MonoGame.Interfaces.Panels
 {
-    internal class InputManager
+    internal class ShopPanel
     {
     }
 }

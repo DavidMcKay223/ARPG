@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BlockHero.MonoGame.Actors.Player.Arsenal;
 using BlockHero.MonoGame.Actors.Player.Bio;
 using BlockHero.MonoGame.Actors.Player.Evolutions;
+using BlockHero.MonoGame.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,7 +19,8 @@ namespace BlockHero.MonoGame.Actors.Player
         private Vector2 _position;
         private float _speed;
         private Stats _stats;
-
+        private Inventory _inventory;
+        
         private IWeapon _currentWeapon;
         private IWeapon _secondaryWeapon;
 
@@ -46,6 +48,8 @@ namespace BlockHero.MonoGame.Actors.Player
 
         public Stats Stats => _stats;
 
+        public Inventory Inventory => _inventory;
+
         public Player()
         {
             _position = new Vector2(100, 100);
@@ -59,6 +63,8 @@ namespace BlockHero.MonoGame.Actors.Player
             _abilities.Add(new ArcaneExplosion());
             _abilities.Add(new StatBoost());
             _abilities.Add(new KillAllSplit());
+
+            _inventory = new Inventory();
         }
 
         public void AddProjectile(Projectile projectile)
